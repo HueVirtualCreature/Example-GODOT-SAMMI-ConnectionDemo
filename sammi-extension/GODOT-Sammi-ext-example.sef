@@ -1,0 +1,69 @@
+[extension_name]
+Example-GODOT-SAMMI-ConnectionDemo
+
+[extension_info]
+Example-GODOT-SAMMI-ConnectionDemo
+Author: Hue_vCreature
+
+[extension_version]
+0.0.0.1
+
+[insert_external]
+
+
+[insert_command]
+SAMMI.extCommand("Example-GODOT-SAMMI-ConnectionDemo - Test", color = 3355443, height = 52, {
+    Host: [
+        "HostUrl",
+        14,
+        ""
+    ],
+    Message: [
+        "Message",
+        14,
+        ""
+    ]
+});
+
+[insert_hook]
+case "Example-GODOT-SAMMI-ConnectionDemo - Test": {
+    GSEE_send_message(SAMMIJSON.Host, SAMMIJSON.Message);
+} break;
+
+[insert_script]
+//Set the initial variable
+window.GSEE_websocket = null;
+
+//Send a message on the websocket
+function GSEE_send_message(url = "ws://127.0.0.1:8001", messageToSend = "") {
+    //If the websocket is not currently in a state to accept messages, spin up a connection
+    if (!window.GSEE_websocket || window.GSEE_websocket.readyState == WebSocket.CLOSED) GSEE_intiialize_websocket(url, () => { window.GSEE_websocket.send(messageToSend); });
+    //Otherwise, go ahead and send the message
+    else {
+        window.GSEE_websocket.send(messageToSend);
+    }
+}
+
+//Spins up a websocket connection
+function GSEE_intiialize_websocket(hostUrl, callback) {
+    if (!window.GSEE_websocket || window.GSEE_websocket.readyState == WebSocket.CLOSED) window.GSEE_websocket = new WebSocket(hostUrl);
+
+    // Connection closed
+    window.GSEE_websocket.addEventListener('close', (event) => {
+        console.debug('WebSocket connection closed:', event);
+    });
+  
+    // Connection error
+    window.GSEE_websocket.addEventListener('error', (event) => {
+        console.error('WebSocket connection error:', event);
+    });
+
+    // Connection opened
+    window.GSEE_websocket.addEventListener('open', (event) => {
+        console.debug('WebSocket connection opened:', event);
+        //If a callback is provided, invoke it. This is in case when we attempt to send a message and the websocket connection is not ready, 
+        //we continue sending the message when it IS ready
+        if (callback) callback();
+    });
+}
+[insert_over]

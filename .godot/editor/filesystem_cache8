@@ -1,0 +1,6 @@
+2a60927148abd1d33b818b535e306557
+::res://::1695514311
+icon.svg::CompressedTexture2D::1748091841991153687::1695514148::1695514152::1::::<><>::
+::res://src/::1695514311
+gd_vtube_studio_demo.gd::GDScript::-1::1695514287::0::1::::<>Node<>::
+main.tscn::PackedScene::8348020642296782105::1695514315::0::1::::<><>::res://src/gd_vtube_studio_demo.gd

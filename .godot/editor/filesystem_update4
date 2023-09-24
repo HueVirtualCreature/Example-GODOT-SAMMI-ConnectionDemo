@@ -1,0 +1,6 @@
+res://src/gd_vtube_studio_demo.tscn
+res://src/gd_vtube_studio_demo.gd
+res://src/main.tscn
+res://src/websocket_server.gd
+res://src/websocket_server.tscn
+res://src/main.gd
